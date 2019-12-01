@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 
-FILE = 'input.txt'
+FILE_NAME = 'input.txt'
 
 
-def load_data(filename=FILE):
+def load_data(filename=FILE_NAME):
     with open(filename) as file:
         data = file.readlines()
     return [int(mass) for mass in data]
