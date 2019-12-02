@@ -16,7 +16,6 @@ def process_opcodes(data):
         1: lambda x, y: x + y,
         2: lambda x, y: x * y,
     }
-
     i = 0
     while i < len(data) - 4:
         op = data[i]
