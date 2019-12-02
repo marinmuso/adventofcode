@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from itertools import product
+
 
 FILE_NAME = 'input.txt'
 
@@ -29,20 +31,22 @@ def process_opcodes(data=None):
     return data
         
 
-def restore_state(data=None):
+def restore_state(noun, verb, data=None):
     if not data:
         data = load_data()
-    data[1] = 12
-    data[2] = 2
+    data[1] = noun
+    data[2] = verb
     processed = process_opcodes(data)
     return processed[0]
 
 
+def crack_output(desired_output):
+    vals = [i for i in range(0, 100)]
+    for noun, verb in product(vals, repeat=2):
+        if restore_state(noun, verb) == desired_output:
+            return noun, verb
+
+
 if __name__ == '__main__':
-    print(f'part 1 answer: {restore_state()}')
-
-
-
-
-
-
+    print(f'part 1: {restore_state(12, 1)}')
+    print(f'part 2: {crack_output(19690720)}')
