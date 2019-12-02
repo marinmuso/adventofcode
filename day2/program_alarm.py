@@ -11,10 +11,7 @@ def load_data(filename=FILE_NAME):
         return [int(val) for val in file.read().split(',')]
 
 
-def process_opcodes(data=None):
-    if not data:
-        data = load_data()
-    
+def process_opcodes(data):
     ops = {
         1: lambda x, y: x + y,
         2: lambda x, y: x * y,
