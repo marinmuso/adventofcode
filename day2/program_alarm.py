@@ -37,8 +37,7 @@ def restore_state(noun, verb, data=None):
 
 
 def crack_output(desired_output):
-    vals = [i for i in range(0, 100)]
-    for noun, verb in product(vals, repeat=2):
+    for noun, verb in product(range(100), repeat=2):
         if restore_state(noun, verb) == desired_output:
             return noun, verb
 
