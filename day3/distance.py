@@ -10,7 +10,7 @@ def load_data(filename=FILE_NAME):
         return [coord.split(',') for coord in coords]
 
 
-def get_intersections(data): 
+def get_visited_points(data): 
     movements = {
         'U': (0, 1),
         'D': (0, -1),
@@ -30,14 +30,15 @@ def get_intersections(data):
                 curr_x, curr_y = curr_x + x, curr_y + y
                 points.append((curr_x, curr_y))  
         visited_points.append(points)
-    return set.intersection(*[set(val) for val in visited_points])
+    return visited_points
 
 
 def find_min_distance(data=None, curr_x=0, curr_y=0):
     if not data:
         data = load_data()
-    
-    intersections = get_intersections(data)
+
+    visited_points = get_visited_points(data)
+    intersections = set.intersection(*[set(val) for val in visited_points])
     
     min_distance = float('inf')
     for x, y in intersections:
@@ -46,16 +47,20 @@ def find_min_distance(data=None, curr_x=0, curr_y=0):
     return min_distance
 
 
+def minimize_signal_delay(data=None): 
+    if not data:
+        data = load_data()
+
+    visited_points = get_visited_points(data)
+    intersections = set.intersection(*[set(val) for val in visited_points])
+  
+    min_distance = float('inf')
+    for point in intersections:
+        dis = visited_points[0].index(point) + visited_points[1].index(point) + 2
+        min_distance = min(min_distance, dis)
+    return min_distance
+
+
 if __name__ == '__main__':
     print(f'part 1: {find_min_distance()}')
-
-
-    
-
-
-
-
-
-
-        
-  
+    print(f'part 2: {minimize_signal_delay()}')
