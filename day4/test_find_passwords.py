@@ -27,7 +27,7 @@ def test_check_never_decreasing(test_input, expected):
     (112233, True),
     (123444, False),
     (111122, True),
-    (221111, True),
+    (566789, True),
 ])
 def test_check_group_digits(test_input, expected):
     assert check_group_digits(test_input) == expected
