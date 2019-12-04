@@ -15,10 +15,7 @@ def check_adj_digits(num):
 
 def check_group_digits(num):
     num = str(num)
-    for digit in num:
-        if num.count(digit) == 2:
-            return True
-    return False
+    return 2 in [num.count(digit) for digit in num]
         
 
 def possible_passwords(part=1, range_nums=PUZZLE_RANGE):
