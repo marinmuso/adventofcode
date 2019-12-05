@@ -21,11 +21,6 @@ def decode_instruction(instruction):
 
 
 def process(data, start_num):
-    ops = {
-        1: lambda x, y: x + y,
-        2: lambda x, y: x * y,
-    }
-
     i = 0
     while i < len(data):
         instruction = data[i]
@@ -50,15 +45,43 @@ def process(data, start_num):
         else:
             #immediate mode by default
             first_num, second_num, res = data[i+1], data[i+2], data[i+3]
-
+            
             if decoded['param_one'] == 0:
                 first_num = data[first_num]
 
             if decoded['param_two'] == 0:
                 second_num = data[second_num]
 
-            data[res] = ops.get(op)(first_num, second_num)
-            i += 4
+            if op == 5:
+                if first_num != 0:
+                    i = second_num
+                else:
+                    i += 3
+
+            elif op == 6:
+                if first_num == 0:
+                    i = second_num
+                else:
+                    i += 3
+
+            elif op == 7:
+                if first_num < second_num:
+                    data[res] = 1
+                else:
+                    data[res] = 0
+                i += 4
+
+            elif op == 8:
+                if first_num == second_num:
+                    data[res] = 1
+                else:
+                    data[res] = 0
+                i += 4
+
+            else:
+                arithmetic_ops = {1: lambda x, y: x + y, 2: lambda x, y: x * y,}
+                data[res] = arithmetic_ops.get(op)(first_num, second_num)
+                i += 4
 
 
 def start():
@@ -70,3 +93,4 @@ if __name__ == '__main__':
     data = load_data()
     start = start()
     process(data, start)
+    
