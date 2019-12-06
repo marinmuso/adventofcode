@@ -12,11 +12,11 @@ def load_data(filename=FILE_NAME):
 
 
 def process_data(data):
-    map = defaultdict(list)
+    mapped_planets = defaultdict(list)
     for orbit in data:
-        k, v = orbit.split(')')
-        map[k].append(v)
-    return map
+        planet, other_planet = orbit.split(')')
+        mapped_planets[planet].append(other_planet)
+    return mapped_planets
 
 
 def dist_and_path_source(map, source):
@@ -52,7 +52,7 @@ def find_min_dis(path, a, b):
 
 if __name__ == '__main__':
     data = load_data()
-    map = process_data(data)
-    dist, path = dist_and_path_source(map, 'COM')
+    mapped_planets = process_data(data)
+    dist, path = dist_and_path_source(mapped_planets, 'COM')
     print(f"part 1: {sum(dist.values())}")
-    print(f"part 2: {find_min_dis(path,'YOU', 'SAN')}")
+    print(f"part 2: {find_min_dis(path, 'YOU', 'SAN')}")
