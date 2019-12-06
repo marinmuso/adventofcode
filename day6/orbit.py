@@ -19,20 +19,40 @@ def process_data(data):
     return map
 
 
-def sum_dis_from_source(map, source):
+def dist_and_path_source(map, source):
     unvisited = deque([source])
     dist = {source: 0,}
+    path = {source : 0, }
     while len(unvisited) != 0:
         planet = unvisited.popleft()
         for other_planet in map[planet]:
             if other_planet not in dist:
                 dist[other_planet] = dist[planet] + 1
+                path[other_planet] = planet
             unvisited.append(other_planet)
-    return sum(dist.values())
+    return dist, path
 
+
+def reconstruct_path(path, node):
+    r_path = []
+    curr = node
+    while curr != 0:
+        curr = path[curr]
+        r_path.append(curr)
+    return r_path
+
+
+def find_min_dis(path, a, b):
+    connections_a = reconstruct_path(path, a)
+    connections_b = reconstruct_path(path, b)
+    for i, node in enumerate(connections_a):
+        if node in connections_b:
+            return i + connections_b.index(node)
+        
 
 if __name__ == '__main__':
     data = load_data()
     map = process_data(data)
-    print(f"part 1: {sum_dis_from_source(map, 'COM')}")
-
+    dist, path = dist_and_path_source(map, 'COM')
+    print(f"part 1: {sum(dist.values())}")
+    print(f"part 2: {find_min_dis(path,'YOU', 'SAN')}")
