@@ -22,7 +22,7 @@ def map_data(data):
 def dist_and_path(map, source):
     unvisited = deque([source])
     dist = {source: 0,}
-    path = {source : 0,}
+    path = {source: 0,}
     while len(unvisited) != 0:
         planet = unvisited.popleft()
         for other_planet in map[planet]:
@@ -45,9 +45,10 @@ def reconstruct_path(path, node):
 def find_min_dis(path, a, b):
     connections_a = reconstruct_path(path, a)
     connections_b = reconstruct_path(path, b)
-    for i, node in enumerate(connections_a):
+    for dist, node in enumerate(connections_a):
         if node in connections_b:
-            return i + connections_b.index(node)
+            other_dist = connections_b.index(node)
+            return dist + other_dist
         
 
 if __name__ == '__main__':
